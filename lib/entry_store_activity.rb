@@ -1,10 +1,10 @@
-class ContentFetchActivity
+class EntryStoreActivity
   extend AWS::Flow::Activities
 
-  activity :fetch do
+  activity :store do
     {
       version: '1.1.0',
-      default_task_list: 'content_fetch_activity_tasklist',
+      default_task_list: 'entry_store_activity_tasklist',
 #      default_task_heartbeat_timeout: 3600,
 #      default_task_schedule_to_close_timeout: 20,
 #      default_task_schedule_to_start_timeout: 20,
@@ -14,8 +14,7 @@ class ContentFetchActivity
     }
   end
 
-  def fetch(url)
-    p url
-    "#{url} feed"
+  def store(entry)
+    p entry
   end
 end
