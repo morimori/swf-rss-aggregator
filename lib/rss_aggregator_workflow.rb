@@ -1,6 +1,7 @@
 require 'content_fetch_activity'
 require 'feed_parse_activity'
 require 'entry_store_activity'
+require 'aws-sdk'
 
 class RssAggregatorWorkflow
   extend AWS::Flow::Workflows
@@ -28,7 +29,8 @@ class RssAggregatorWorkflow
     @futures = []
   end
 
-  def aggregate_rss
+  def aggregate_rss(feed_list_url)
+    @feed_list_url = feed_list_url
     urls.each do |url|
       futures << fetch(url)
     end
@@ -37,9 +39,17 @@ class RssAggregatorWorkflow
 
   private
   attr_reader :futures
+  attr_reader :feed_list_url
 
   def urls
-    ['url1', 'url2', 'url3']
+    list_url = URI.parse(feed_list_url)
+    bucket = Aws::S3::Bucket.new list_url.hostname
+    object = bucket.object(list_url.path.sub(%r{^/}, '')).get
+    [].tap do |result|
+      object.body.each do |line|
+        result << line.chomp
+      end
+    end
   end
 
   def fetch(url)
