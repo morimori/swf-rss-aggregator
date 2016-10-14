@@ -10,10 +10,8 @@ GEM
     json (1.8.3)
     lru_redux (0.8.4)
     mini_portile2 (2.1.0)
-    nokogiri (1.6.8)
+    nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
-      pkg-config (~> 1.1.7)
-    pkg-config (1.1.7)
 
 PLATFORMS
   ruby
@@ -22,4 +20,4 @@ DEPENDENCIES
   aws-flow
 
 BUNDLED WITH
-   1.13.1
+   1.13.3
